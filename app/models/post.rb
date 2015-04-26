@@ -4,6 +4,8 @@ class Post < ActiveRecord::Base
   belongs_to :author, :class_name => 'Member'
   belongs_to :forum
   has_many :comments, :dependent => :destroy
+  has_many :components, :class_name => :Comment,:foreign_key => 'post_id' # alias for comments
+
   has_and_belongs_to_many :crops
   before_destroy {|post| post.crops.clear}
   after_save :update_crops_posts_association
@@ -38,6 +40,26 @@ class Post < ActiveRecord::Base
   def Post.recently_active
     Post.all.sort do |a,b|
       b.recent_activity <=> a.recent_activity
+    end
+  end
+
+  # Returns the number of all decendents
+  def get_count
+    count = 0
+    components.each {|component| count += component.get_count }
+    return count
+  end
+
+  def get_latest
+    # When thre is no child component
+    if components.size == 0
+      return self
+    end
+
+    # When there are child components
+    components_array = comments.all
+    return components_array.inject do |latest, component|
+      latest.updated_at > component.updated_at ? latest : component
     end
   end
 

@@ -1,6 +1,7 @@
 class Comment < ActiveRecord::Base
   belongs_to :author, :class_name => 'Member'
   belongs_to :post
+  belongs_to :parent, :class_name => :Post,:foreign_key => 'post_id'  # alias for post
 
   default_scope { order("created_at DESC") }
   scope :post_order, -> { reorder("created_at ASC") } # for display on post page
@@ -18,6 +19,14 @@ class Comment < ActiveRecord::Base
         :post_id => self.post.id
       )
     end
+  end
+
+  def get_count
+    1
+  end
+
+  def get_latest
+    self
   end
 
 end

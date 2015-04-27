@@ -46,13 +46,15 @@ class Post < ActiveRecord::Base
   # Returns the number of all decendents
   def get_count
     count = 1
-    components.each { |component| count += component.get_count }
+    if defined?(components)
+      components.each { |component| count += component.get_count }
+    end
     return count
   end
 
   def get_latest
     # When thre is no child component
-    return self if components.size == 0
+    return self if !defined?(components) || components.size == 0
 
     # When there are child components
     components_array = components.all

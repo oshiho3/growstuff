@@ -139,10 +139,10 @@ describe Post do
   context "composite" do
 
     it "single level" do
-      @post = FactoryGirl.create(:post, :author => @member, :updated_at => Time.now - 1.week)
-      @comment1 = FactoryGirl.create(:comment, :post => @post, :updated_at => Time.now - 3.days)
-      @comment2 = FactoryGirl.create(:comment, :post => @post, :updated_at => Time.now - 1.day)
-      @comment3 = FactoryGirl.create(:comment, :post => @post, :updated_at => Time.now - 2.days)
+      @post = FactoryGirl.create(:post, :author => @member, :created_at => Time.now - 1.week)
+      @comment1 = FactoryGirl.create(:comment, :post => @post, :created_at => Time.now - 3.days)
+      @comment2 = FactoryGirl.create(:comment, :post => @post, :created_at => Time.now - 1.day)
+      @comment3 = FactoryGirl.create(:comment, :post => @post, :created_at => Time.now - 2.days)
       expect(@post.get_count).to eq 4
       expect(@post.get_latest).to eq @comment2
     end

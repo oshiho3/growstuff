@@ -34,7 +34,7 @@ class Post < ActiveRecord::Base
   # i.e. the time of the most recent comment, or of the post itself if
   # there are no comments.
   def recent_activity
-    self.comments.present? ? self.comments.reorder('created_at DESC').first.created_at : self.created_at
+    get_latest.created_at
   end
 
   # return posts sorted by recent activity

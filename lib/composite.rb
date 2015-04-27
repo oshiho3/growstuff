@@ -14,8 +14,13 @@ module Composite
 
     # When there are child components
     components_array = components.all
-    latest = components_array.inject do |latest, component|
-      latest.updated_at > component.get_latest.updated_at ? latest : component.get_latest
+    latest = nil
+    components_array.each do |component|
+      if latest == nil
+        latest = component.get_latest
+      else
+        latest = latest.created_at > component.get_latest.created_at ? latest : component.get_latest
+      end
     end
     return latest
   end

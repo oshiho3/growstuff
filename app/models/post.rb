@@ -45,22 +45,21 @@ class Post < ActiveRecord::Base
 
   # Returns the number of all decendents
   def get_count
-    count = 0
-    components.each {|component| count += component.get_count }
+    count = 1
+    components.each { |component| count += component.get_count }
     return count
   end
 
   def get_latest
     # When thre is no child component
-    if components.size == 0
-      return self
-    end
+    return self if components.size == 0
 
     # When there are child components
-    components_array = comments.all
-    return components_array.inject do |latest, component|
-      latest.updated_at > component.updated_at ? latest : component
+    components_array = components.all
+    latest = components_array.inject do |latest, component|
+      latest.updated_at > component.get_latest.updated_at ? latest : component.get_latest
     end
+    return latest
   end
 
   private

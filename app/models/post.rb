@@ -6,7 +6,7 @@ class Post < ActiveRecord::Base
   belongs_to :author, :class_name => 'Member'
   belongs_to :forum
   has_many :comments, :dependent => :destroy
-  acts_as_composite(class_name: :Comment, foreign_key: 'post_id')
+  acts_as_composite :class_name => Comment, :foreign_key => 'post_id'
   has_and_belongs_to_many :crops
   before_destroy {|post| post.crops.clear}
   after_save :update_crops_posts_association

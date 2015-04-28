@@ -31,7 +31,7 @@ class ActiveRecord::Base
 
   def self.acts_as_composite(options={})
     unless options.empty?
-      has_many :components, class_name: options[:class_name], foreign_key: options[:foreign_key] # alias
+      has_many :components, options # alias
     end
   end
 

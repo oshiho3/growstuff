@@ -1,7 +1,8 @@
 module Composite
-    # Returns the number of all decendents
+  # Returns the number of all decendents
   def get_count
     count = 1
+
     if defined?(components)
       components.each { |component| count += component.get_count }
     end
@@ -29,12 +30,13 @@ end
 
 class ActiveRecord::Base
 
-  def self.acts_as_composite(options={})
-    unless options.empty?
-      has_many :components, options # alias
-    end
+  def self.has_many_components(options={})
+    has_many :components, options
   end
 
-  include Composite
+  def self.acts_as_composite(options={})
+    include Composite
+  end
+
 end
 

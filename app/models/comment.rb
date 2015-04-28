@@ -3,9 +3,10 @@ require 'composite'
 class Comment < ActiveRecord::Base
   belongs_to :author, :class_name => 'Member'
   belongs_to :post
-  acts_as_composite
   default_scope { order("created_at DESC") }
   scope :post_order, -> { reorder("created_at ASC") } # for display on post page
+
+  acts_as_composite
 
   after_create do
     recipient = self.post.author.id

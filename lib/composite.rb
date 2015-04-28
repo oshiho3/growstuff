@@ -1,7 +1,7 @@
 module Composite
   # Returns the number of all decendents
   def get_count
-    count = 1
+    count = self.countable_component ? 1 : 0
 
     if defined?(components)
       components.each { |component| count += component.get_count }
@@ -36,6 +36,8 @@ class ActiveRecord::Base
 
   def self.acts_as_composite(options={})
     include Composite
+    class_attribute :countable_component
+    self.countable_component = (options[:countable_component] == false) ? false : true
   end
 
 end

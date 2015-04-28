@@ -36,7 +36,7 @@ describe Forum do
       @post2 = FactoryGirl.create(:forum_post, :forum => @forum, :created_at => Time.now - 1.day)
       @post3 = FactoryGirl.create(:forum_post, :forum => @forum, :created_at => Time.now - 2.day)
 
-      expect(@forum.get_count).to eq 4
+      expect(@forum.get_count).to eq 3
       expect(@forum.get_latest).to eq @post2
 
       @comment1 = FactoryGirl.create(:comment, :post => @post1, :created_at => Time.now - 10.days)
@@ -46,7 +46,7 @@ describe Forum do
       @comment5 = FactoryGirl.create(:comment, :post => @post3, :created_at => Time.now - 2.days)
       @forum.reload
 
-      expect(@forum.get_count).to eq 9
+      expect(@forum.get_count).to eq 8
       expect(@forum.get_latest).to eq @comment3
     end
   end

@@ -3,6 +3,7 @@ require 'composite'
 class Comment < ActiveRecord::Base
   belongs_to :author, :class_name => 'Member'
   belongs_to :post
+
   default_scope { order("created_at DESC") }
   scope :post_order, -> { reorder("created_at ASC") } # for display on post page
 
@@ -22,4 +23,5 @@ class Comment < ActiveRecord::Base
       )
     end
   end
+
 end

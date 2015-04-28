@@ -13,4 +13,5 @@ class Forum < ActiveRecord::Base
   def to_s
     return name
   end
+
 end
